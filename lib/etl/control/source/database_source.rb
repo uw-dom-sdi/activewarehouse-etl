@@ -43,12 +43,13 @@ module ETL #:nodoc:
         super
         @target = configuration[:target]
         @table = configuration[:table]
+        @table_name = configuration[:table_name] ? configuration[:table_name] : configuration[:table]
         @query = configuration[:query]
       end
       
       # Get a String identifier for the source
       def to_s
-        "#{host}/#{database}/#{@table}"
+        "#{host}/#{database}/#{@table_name}"
       end
       
       # Get the local directory to use, which is a combination of the 
