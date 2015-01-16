@@ -14,7 +14,9 @@ module ETL #:nodoc:
         public
         # Execute the migrations
         def migrate
+          ActiveRecord::Base.establish_connection(:etl_execution)
           connection.initialize_schema_migrations_table
+          ActiveRecord::Base.remove_connection
           last_migration.upto(target - 1) do |i| 
             __send__("migration_#{i+1}".to_sym)
             connection.assume_migrated_upto_version(i+1)
